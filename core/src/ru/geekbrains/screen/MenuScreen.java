@@ -8,19 +8,20 @@ import ru.geekbrains.base.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
     private Texture img;
+    private Texture background;
 
     @Override
     public void show() {
         super.show();
         img = new Texture("badlogic.jpg");
+        background = new Texture ("textures/back_img.gif");
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        batch.draw(background,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(img, 0, 0);
         batch.end();
     }
