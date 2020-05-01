@@ -69,7 +69,6 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        //System.out.println("touchUp = " + screenX + ", " + screenY + "; pointer = " + pointer + "; button = " + button);
         return false;
     }
 
