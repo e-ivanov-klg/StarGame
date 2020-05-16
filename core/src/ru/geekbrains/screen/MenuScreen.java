@@ -6,53 +6,52 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
+import ru.geekbrains.math.Rect;
+import ru.geekbrains.sprite.Background;
+import ru.geekbrains.sprite.Ball;
 
 public class MenuScreen extends BaseScreen {
+
     private Texture img;
-    private Texture background;
-    private Vector2 pos;
-    private Vector2 touch;
-    private Vector2 speed;
-    private Vector2 pos1;
+    private Texture bg;
+    private Background background;
+    private Ball ball;
 
     @Override
     public void show() {
         super.show();
         img = new Texture("textures/ball.png");
-        background = new Texture ("textures/back_img.gif");
-        pos = new Vector2();
-        pos1 = new Vector2();
-        touch = new Vector2();
-        speed = new Vector2();
+        bg = new Texture("textures/back_img.gif");
+        background = new Background(bg);
+        ball = new Ball(img);
+    }
+
+    @Override
+    public void resize(Rect worldBounds) {
+        background.resize(worldBounds);
+        ball.resize(worldBounds);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        pos1.set(touch);
-        if (pos1.sub(pos).len() > speed.len() ) {
-            pos.add(speed);
-        }
+        ball.update(delta);
         batch.begin();
-        batch.draw(background,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(img, pos.x, pos.y);
+        background.draw(batch);
+        ball.draw(batch);
         batch.end();
     }
 
     @Override
     public void dispose() {
-
         img.dispose();
+        bg.dispose();
         super.dispose();
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        touch.set(screenX, Gdx.graphics.getHeight() - screenY);
-        touch.set(touch.x-50, touch.y-50);
-        speed.set(touch.cpy().sub(pos));
-        speed.nor();
-        speed.scl(3.0f);
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        ball.touchDown(touch, pointer, button);
         return false;
     }
 }
