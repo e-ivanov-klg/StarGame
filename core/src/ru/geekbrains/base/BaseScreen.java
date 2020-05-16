@@ -62,7 +62,6 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public void resize  (Rect worldBounds) {
-        System.out.println("worldBounds worldbound.height = " + worldBounds.getHeight() + "/ worldBpounds.width = " + worldBounds.getWidth());
     }
 
     @Override
@@ -109,7 +108,6 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public boolean touchDown(Vector2 touch,int pointer, int button) {
-        System.out.println("touchDown touch.x = " + touch.x + "/ touch.y = " + touch.y);
         return false;
     }
 
@@ -121,7 +119,6 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public boolean touchUp(Vector2 touch, int pointer, int button) {
-        System.out.println("touchUp touch.x = " + touch.x + "/ touch.y = " + touch.y);
         return false;
     }
 
@@ -134,7 +131,6 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public boolean touchDragged(Vector2 touch, int pointer) {
-        System.out.println("touchDrugged touch.x = " + touch.x + "/ touch.y = " + touch.y);
         return false;
     }
 
