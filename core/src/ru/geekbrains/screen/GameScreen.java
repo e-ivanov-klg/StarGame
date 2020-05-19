@@ -8,9 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.pool.BulletPool;
 import ru.geekbrains.sprite.Background;
 import ru.geekbrains.sprite.Star;
-import ru.geekbrains.sprite.StarShip;
+import ru.geekbrains.sprite.MainShip;
 
 public class GameScreen extends BaseScreen {
 
@@ -18,8 +19,8 @@ public class GameScreen extends BaseScreen {
     private Background background;
     private Star stars[];
     private TextureAtlas atlas;
-    private StarShip starShip;
-    private TextureRegion region;
+    private MainShip mainShip;
+    private BulletPool bulletPool;
 
     @Override
     public void show() {
@@ -31,14 +32,14 @@ public class GameScreen extends BaseScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(atlas);
         }
-        region = new TextureRegion(atlas.findRegion("main_ship"));
-        region.setRegion(region.getRegionX(),region.getRegionY(), region.getRegionWidth()/2, region.getRegionHeight());
-        starShip = new StarShip(region);
+        bulletPool = new BulletPool();
+        mainShip = new MainShip(atlas, bulletPool);
     }
 
     @Override
     public void render(float delta) {
         update(delta);
+        free();
         draw();
     }
 
@@ -48,7 +49,8 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
-        starShip.draw(batch);
+        bulletPool.drowActiveSprites(batch);
+        mainShip.draw(batch);
         batch.end();
     }
 
@@ -56,7 +58,12 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars){
             star.update(delta);
         }
-        starShip.update(delta);
+        bulletPool.updateActiveSprites(delta);
+        mainShip.update(delta);
+    }
+
+    private void free (){
+        bulletPool.freeAllDestroyed();
     }
 
     @Override
@@ -65,33 +72,38 @@ public class GameScreen extends BaseScreen {
        for (Star star : stars) {
            star.resize(worldBounds);
        }
-       starShip.resize(worldBounds);
+       mainShip.resize(worldBounds);
     }
 
     @Override
     public void dispose() {
         bg.dispose();
+        atlas.dispose();
+        bulletPool.dispose();
+        super.dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        starShip.keyDown(keycode);
+        mainShip.keyDown(keycode);
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        starShip.keyUp(keycode);
+        mainShip.keyUp(keycode);
         return false;
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
-        return super.touchDown(touch, pointer, button);
+        mainShip.touchDown(touch, pointer, button);
+        return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
-        return super.touchUp(touch, pointer, button);
+        mainShip.touchUp(touch,pointer,button);
+        return false;
     }
 }
