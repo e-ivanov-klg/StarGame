@@ -32,7 +32,7 @@ public class MainShip extends Ship {
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
         bulletRegion = atlas.findRegion("bulletMainShip");
-        bulleetV.set(0f,0.5f);
+        bulletV.set(0f,0.5f);
         v.setZero();
         leftKeyPressed = false;
         rightKeyPressed = false;
