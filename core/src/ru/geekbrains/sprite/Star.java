@@ -43,10 +43,10 @@ public class Star extends Sprite {
             animateTimer = 0f;
         }
         pos.mulAdd(v, delta);
-        checkbounds();
+        checkBounds();
     }
 
-    private void checkbounds() {
+    private void checkBounds() {
         if (getRight() < worldBounds.getLeft()) {
             setLeft(worldBounds.getRight());
         }
