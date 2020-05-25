@@ -13,7 +13,7 @@ public class EnemyEmitter {
 
     private static final float GENERATE_INTERVAL = 4f;
 
-    private static final float ENEMY_SMALL_HEIGHT = 0.1f;
+    private static final float ENEMY_SMALL_HEIGHT = 0.15f;
     private static final int ENEMY_SMALL_HP = 1;
     private static final float ENEMY_SMALL_BULLET_HEIGHT = 0.01f;
     private static final float ENEMY_SMALL_BULLET_VY = -0.4f;
