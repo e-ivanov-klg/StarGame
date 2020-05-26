@@ -18,14 +18,17 @@ import ru.geekbrains.pool.ExplosionPool;
 
 public class MainShip extends Ship {
 
+
+
     private static final float SHIP_SPEED = 0.5f;
     private static final float SIZE = 0.15f;
     private static final float MARGIN = 0.05f;
     private static final int INVALID_POINTER = -1;
-    private static final int HP = 100;
+    private static final int HP = 10;
 
     private boolean leftKeyPressed;
     private boolean rightKeyPressed;
+
 
     public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"), 1,2,2);
@@ -41,6 +44,14 @@ public class MainShip extends Ship {
         bulletHeight = 0.01f;
         damage = 1;
         hp = HP;
+    }
+
+    public void initNewGame() {
+        flushDestroy();
+        hp = HP;
+        leftKeyPressed = false;
+        rightKeyPressed = false;
+        pos.x = 0f;
     }
 
     @Override
@@ -135,4 +146,11 @@ public class MainShip extends Ship {
         sound.dispose();
     }
 
+    public boolean isBulletCollision (Bullet bullet) {
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y
+                || bullet.getTop() < getBottom()
+        );
+    }
 }
