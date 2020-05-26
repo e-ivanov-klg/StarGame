@@ -13,7 +13,7 @@ import ru.geekbrains.sprite.Explosion;
 public class Ship extends Sprite {
     protected Vector2 v;
     protected Vector2 v0;
-    protected Vector2 bulleetV;
+    protected Vector2 bulletV;
     protected Rect worldBounds;
     protected ExplosionPool explosionPool;
     protected BulletPool bulletPool;
@@ -24,13 +24,14 @@ public class Ship extends Sprite {
     protected float bulletHeight;
     protected int damage;
     protected int hp;
+    private Vector2 bulletStartPosition;
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
         v = new Vector2();
         v0 = new Vector2();
-        //worldBounds = new Rect();
-        bulleetV = new Vector2();
+        bulletV = new Vector2();
+        bulletStartPosition = new Vector2();
     }
 
     public Ship(BulletPool bulletPool, ExplosionPool explosionPool,  Rect worldBounds, Sound sound){
@@ -40,7 +41,8 @@ public class Ship extends Sprite {
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
         this.sound = sound;
-        bulleetV = new Vector2();
+        bulletV = new Vector2();
+        bulletStartPosition = new Vector2();
     }
 
     @Override
@@ -67,8 +69,13 @@ public class Ship extends Sprite {
 
     private void shoot(){
         Bullet bullet = bulletPool.obtain();
-        bullet.set(this, bulletRegion, pos.cpy().add(0, getHalfHeight()), bulleetV, bulletHeight, worldBounds, damage);
-        sound.play(0.1f);
+        if (bulletV.y < 0f) {
+            bulletStartPosition.set(pos.x, pos.y - getHalfHeight());
+        } else {
+            bulletStartPosition.set(pos.x, pos.y + getHalfHeight());
+        }
+        bullet.set(this, bulletRegion, bulletStartPosition, bulletV, bulletHeight, worldBounds, damage);
+        sound.play(0.4f);
     }
 
     private void boom (){
