@@ -40,6 +40,12 @@ public abstract class SpritesPool<T extends Sprite> {
         }
     }
 
+    public void  destroyActiveSprites(){
+        for (T object : activeObjects) {
+            object.destroy();
+        }
+    }
+
     public List<T> getActiveObjects() {
         return activeObjects;
     }
