@@ -17,14 +17,11 @@ import ru.geekbrains.pool.BulletPool;
 import ru.geekbrains.pool.ExplosionPool;
 
 public class MainShip extends Ship {
-
-
-
     private static final float SHIP_SPEED = 0.5f;
     private static final float SIZE = 0.15f;
     private static final float MARGIN = 0.05f;
     private static final int INVALID_POINTER = -1;
-    private static final int HP = 10;
+    private static final int HP = 30;
 
     private boolean leftKeyPressed;
     private boolean rightKeyPressed;
@@ -142,6 +139,17 @@ public class MainShip extends Ship {
         }
     }
 
+    @Override
+    public boolean touchDragged(Vector2 touch, int pointer) {
+        if (touch.x < 0) {
+            moveLeft();
+        }
+        if (touch.x > 0) {
+            moveRight();
+        }
+        return false;
+    }
+
     public void dispose (){
         sound.dispose();
     }
@@ -153,4 +161,5 @@ public class MainShip extends Ship {
                 || bullet.getTop() < getBottom()
         );
     }
+
 }
