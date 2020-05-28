@@ -65,6 +65,10 @@ public class Ship extends Sprite {
         }
     }
 
+    public int getHp() {
+        return hp;
+    }
+
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
