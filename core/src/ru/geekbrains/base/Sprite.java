@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.utils.Regions;
-import sun.security.action.GetBooleanAction;
 
 public class Sprite extends Rect {
 
